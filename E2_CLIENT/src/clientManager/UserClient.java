@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -12,7 +14,7 @@ import javax.swing.JOptionPane;
 import model.Horarios;
 import model.Users;
 import resources.GlobalVariables;
-import resources.views;
+import resources.Views;
 import view.LoginView;
 import view.MainMenuView;
 
@@ -29,6 +31,7 @@ public class UserClient {
 	 * @return true if the login credentials apear on the db
 	 */
 	public void login(String email, String password) {
+
 		try {
 			Socket client = new Socket(GlobalVariables.serverIP, 54321);
 
@@ -37,7 +40,20 @@ public class UserClient {
 
 			dos.writeUTF("login");
 			dos.writeUTF(email);
-			dos.writeUTF(password);
+			
+			String resumenString = new String();
+
+			try {
+			    MessageDigest md = MessageDigest.getInstance("SHA-1");
+			    byte dataBytes[] = password.getBytes();
+			    md.update(dataBytes);
+			    byte resumen[] = md.digest();
+			    resumenString = new String(resumen);
+			} catch (NoSuchAlgorithmException e) {
+			    e.printStackTrace();
+			}
+			
+			dos.writeUTF(resumenString);
 
 			Boolean loginCredentialsOk = dis.readBoolean();
 			System.out.println(loginCredentialsOk);
@@ -48,27 +64,37 @@ public class UserClient {
 					Users registeredUser = (Users) dis.readObject();
 					
 					//THE USERS TIPE IS = 3(tipe teacher)
-					if (registeredUser.getTipos().getId() == 3) {
+					if (registeredUser.getTipos().getId() != 4) {
 						GlobalVariables.currentUser = registeredUser;
 
 						// Change selected teacher on BesteOrdutegiaView
-						views.besteOrdutegiaView.lblTitle.setText(
+						Views.besteOrdutegiaView.lblTitle.setText(
 								(registeredUser.getNombre() + " " + registeredUser.getApellidos() + "ren ORDUTEGIA")
 										.toUpperCase());
 
-						views.loginView.setVisible(false);
-						views.mainMenuView.setVisible(true);
+						//SET THE SELECTED TEACHER ON THE COMBO OF BESTEORDUTEGIAVIEW
+						ArrayList<Users> teachersList = new UserClient().getTeachers();
+						for (int i = 0; i < teachersList.size(); i++) {
+							if(teachersList.get(i).getEmail().equals(registeredUser.getEmail())) {
+								Views.besteOrdutegiaView.comboTeachers.setSelectedIndex(i);
+								System.out.println("Selected index: "+i);
+							}
+							
+						}
+		
+						Views.loginView.setVisible(false);
+						Views.mainMenuView.setVisible(true);
 					} else {
-						JOptionPane.showMessageDialog(views.loginView, "Ikasleak ezin zarete sistemara sartu!",
-								"KONTUZ!!", JOptionPane.ERROR_MESSAGE);
+						//ERROR MESSAGE FOR STUDENTS
+						JOptionPane.showMessageDialog(Views.loginView, "Ikasleak ezin zarete sistemara sartu!","KONTUZ!!", JOptionPane.ERROR_MESSAGE);
 					}
 
 				} catch (ClassNotFoundException e1) {
 					e1.printStackTrace();
 				}
 			} else {
-				JOptionPane.showMessageDialog(views.loginView, "Zure kredentzialak ez dira zuzenak!", "KONTUZ!!",
-						JOptionPane.ERROR_MESSAGE);
+				//ERROR MESSAGE FOR WRONG CREDENTIALS
+				JOptionPane.showMessageDialog(Views.loginView, "Zure kredentzialak ez dira zuzenak!", "KONTUZ!!", JOptionPane.ERROR_MESSAGE);
 			}
 
 			dos.close();

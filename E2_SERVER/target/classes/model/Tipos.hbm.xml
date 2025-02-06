@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15 ene 2025, 9:52:52 by Hibernate Tools 6.5.1.Final -->
+<hibernate-mapping default-lazy="false">
+ <class catalog="calendar" name="model.Tipos" optimistic-lock="none" table="tipos">
+  <id name="id" type="int">
+   <column name="id"/>
+   <generator class="assigned"/>
+  </id>
+  <property generated="never" lazy="false" name="name" type="string">
+   <column length="50" name="name"/>
+  </property>
+  <property generated="never" lazy="false" name="nameEus" type="string">
+   <column length="50" name="name_eus"/>
+  </property>
+  <set fetch="select" inverse="true" lazy="true" name="userses"
+   sort="unsorted" table="users">
+   <key>
+    <column name="tipo_id" not-null="true"/>
+   </key>
+   <one-to-many class="model.Users"/>
+  </set>
+ </class>
+</hibernate-mapping>

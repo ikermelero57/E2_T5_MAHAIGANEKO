@@ -2,8 +2,9 @@ package model;
 
 import java.util.Objects;
 
-public class Ikastetxea {
+public class Ikastetxea implements java.io.Serializable {
 	
+	private static final long serialVersionUID = -4883376332200913789L;
     private int ccen;
     private String nom;
     private String nome;

@@ -15,7 +15,7 @@ import view.LoginView;
 import view.MainMenuView;
 import view.OrdutegiaView;
 
-public class views {
+public class Views {
 	
 	public static LoginView loginView;
 	public static BesteOrdutegiaView besteOrdutegiaView;

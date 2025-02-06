@@ -24,10 +24,11 @@ import clientManager.UserClient;
 import model.Horarios;
 import model.Users;
 import resources.GlobalVariables;
-import resources.views;
+import resources.Views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JSeparator;
 
 public class OrdutegiaView extends JFrame {
 
@@ -39,7 +40,7 @@ public class OrdutegiaView extends JFrame {
     public OrdutegiaView() {
     	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1080, 404);
+        setBounds(100, 100, 1080, 466);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
@@ -50,12 +51,12 @@ public class OrdutegiaView extends JFrame {
         JLabel lblNewLabel = new JLabel("ORDUTEGIA");
         lblNewLabel.setForeground(new Color(255, 255, 255));
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 35));
-        lblNewLabel.setBounds(426, 27, 232, 85);
+        lblNewLabel.setBounds(389, 0, 232, 85);
         contentPane.add(lblNewLabel);
 
         // Botón para volver
         JButton btnGoBack = new JButton();
-        btnGoBack.setBounds(119, 39, 293, 62);
+        btnGoBack.setBounds(334, 91, 313, 85);
         btnGoBack.setBackground(new Color(102, 153, 255));
         btnGoBack.setBorder(null);
 
@@ -68,8 +69,8 @@ public class OrdutegiaView extends JFrame {
         btnGoBack.setIcon(new ImageIcon(scaledImage));
 
         btnGoBack.addActionListener(e -> {
-        	views.mainMenuView.setVisible(true);
-        	views.ordutegiaView.setVisible(false);
+        	Views.mainMenuView.setVisible(true);
+        	Views.ordutegiaView.setVisible(false);
         });
         contentPane.add(btnGoBack);
         
@@ -89,17 +90,21 @@ public class OrdutegiaView extends JFrame {
 
         // Agregar tabla a JScrollPane
         JScrollPane scrollPane = new JScrollPane(tabla);
-        scrollPane.setBounds(50, 150, 945, 151);
+        scrollPane.setBounds(46, 244, 945, 151);
         contentPane.add(scrollPane);
         
-        JButton btnNewButton = new JButton("Return");
+        JButton btnNewButton = new JButton("Atzera bueltatu");
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-            	views.mainMenuView.setVisible(true);
-            	views.ordutegiaView.setVisible(false);
+            	Views.mainMenuView.setVisible(true);
+            	Views.ordutegiaView.setVisible(false);
         	}
         });
-        btnNewButton.setBounds(781, 68, 89, 23);
+        btnNewButton.setBounds(408, 204, 195, 23);
         contentPane.add(btnNewButton);
+        
+        JSeparator separator = new JSeparator();
+        separator.setBounds(167, 67, 687, 23);
+        contentPane.add(separator);
     }
 }

@@ -24,10 +24,11 @@ import clientManager.UserClient;
 import model.Horarios;
 import model.Users;
 import resources.GlobalVariables;
-import resources.views;
+import resources.Views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JSeparator;
 
 public class BesteOrdutegiaView extends JFrame {
 
@@ -36,7 +37,8 @@ public class BesteOrdutegiaView extends JFrame {
     private JTable tabla;
     public DefaultTableModel modelo;
     public JLabel lblTitle;
-
+    public JComboBox<String> comboTeachers;
+    
     public BesteOrdutegiaView() {
     	
         ArrayList<Users> teachersList = new UserClient().getTeachers();
@@ -53,11 +55,12 @@ public class BesteOrdutegiaView extends JFrame {
         lblTitle = new JLabel(" ORDUTEGIA");
         lblTitle.setForeground(new Color(255, 255, 255));
         lblTitle.setFont(new Font("Tahoma", Font.BOLD, 35));
-        lblTitle.setBounds(46, 111, 945, 85);
+        lblTitle.setBounds(245, 11, 945, 85);
         contentPane.add(lblTitle);
+        
         // Botón para volver
         JButton btnGoBack = new JButton();
-        btnGoBack.setBounds(327, 38, 293, 62);
+        btnGoBack.setBounds(358, 127, 322, 79);
         btnGoBack.setBackground(new Color(102, 153, 255));
         btnGoBack.setBorder(null);
 
@@ -70,14 +73,14 @@ public class BesteOrdutegiaView extends JFrame {
         btnGoBack.setIcon(new ImageIcon(scaledImage));
 
         btnGoBack.addActionListener(e -> {
-        	views.besteOrdutegiaView.setVisible(false);
-        	views.mainMenuView.setVisible(true);
+        	Views.besteOrdutegiaView.setVisible(false);
+        	Views.mainMenuView.setVisible(true);
         });
         contentPane.add(btnGoBack);
 
         // ComboBox Teachers
-        JComboBox<String> comboTeachers = new JComboBox<>();
-        comboTeachers.setBounds(715, 47, 276, 21);
+        comboTeachers = new JComboBox<>();
+        comboTeachers.setBounds(46, 158, 276, 21);
         contentPane.add(comboTeachers);
 
         for (Users teacher : teachersList) {
@@ -91,11 +94,9 @@ public class BesteOrdutegiaView extends JFrame {
             	
                 Users selectedTeacher = teachersList.get(selectedIndex);
                 
-                System.out.println("Teacher selected: " + selectedTeacher.getUsername());
-                
                 ArrayList<Horarios> horariosPorProfesor = OrdutegiaClient.getHorariosByTeachersEmail(selectedTeacher.getEmail());
                 
-                views.fillTable(horariosPorProfesor, modelo);
+                Views.fillTable(horariosPorProfesor, modelo);
                 
                 lblTitle.setText((selectedTeacher.getNombre()+" "+selectedTeacher.getApellidos()+"ren ORDUTEGIA").toUpperCase());
             }
@@ -120,18 +121,18 @@ public class BesteOrdutegiaView extends JFrame {
         scrollPane.setBounds(46, 233, 945, 151);
         contentPane.add(scrollPane);
         
-        JButton btnNewButton = new JButton("Return");
+        JButton btnNewButton = new JButton("Atzera bueltatu");
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-            	views.mainMenuView.setVisible(true);
-            	views.besteOrdutegiaView.setVisible(false);
+            	Views.mainMenuView.setVisible(true);
+            	Views.besteOrdutegiaView.setVisible(false);
         	}
         });
-        btnNewButton.setBounds(715, 79, 276, 23);
+        btnNewButton.setBounds(715, 157, 276, 23);
         contentPane.add(btnNewButton);
         
-        
-        
-  
+        JSeparator separator = new JSeparator();
+        separator.setBounds(46, 87, 945, 9);
+        contentPane.add(separator);
     }
 }
