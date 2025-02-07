@@ -13,15 +13,6 @@ public class Emails{
     private static final String EMAIL_FROM = "erronka2t5@gmail.com\r\n";
     private static final String PASSWORD_FROM = "ynvv fdhi ituq qsti"; // Usa una contraseña de aplicación
 
-    public static void main(String[] args) {
-        String emailTo = "jon.olandaar@elorrieta-errekamari.com";
-        String subject = "Me pican los cocos";
-        String content = "Iker melero es gay";
-
-        // Configurar y enviar correo
-        new Emails().sendEmail(emailTo, subject, content);
-    }
-
     public void sendEmail(String emailTo, String subject, String content) {
         try {
             // Configurar propiedades del servidor SMTP
@@ -52,11 +43,11 @@ public class Emails{
                 mTransport.sendMessage(mCorreo, mCorreo.getAllRecipients());
             }
 
-            JOptionPane.showMessageDialog(null, "Correo enviado correctamente");
+            System.out.println("Correo enviado correctamente");
 
         } catch (MessagingException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Error al enviar el correo", ex);
-            JOptionPane.showMessageDialog(null, "Error al enviar el correo: " + ex.getMessage());
+            System.out.println("Error al enviar el correo");
         }
     }
 }

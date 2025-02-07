@@ -96,8 +96,8 @@ public class ServerThread extends Thread {
 
 				try {
 					setReunionState();
-				} catch (IOException e) {
 					System.out.println("Error in setReunionState function");
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
@@ -141,7 +141,6 @@ public class ServerThread extends Thread {
 					e.printStackTrace();
 				}
 				break;
-			
 				
 			}
             // CLOSE CONNECTION
@@ -278,16 +277,6 @@ public class ServerThread extends Thread {
 		emails.sendEmail(email, "Pasahitza aldatuta", "Pasahitza aldatu da: " + pasahitza);
 	}
 	
-//	public void addReunion() {
-//		DaoReuniones daoReuniones = new DaoReuniones();
-//		Reuniones reunion = new Reuniones();
-//        try {
-//			Reuniones newReunion = (Reuniones) objectInputManager.readObject();
-//		} catch (ClassNotFoundException | IOException e) {
-//			e.printStackTrace();
-//		}
-//        daoReuniones.addReunion(reunion);
-//        reunion.getUsersByProfesorId();
-//	}
+
 	
 }
